@@ -9,23 +9,19 @@
 </head>
 <body>
     <div id="root">
-      <div v-html="content"></div>
-      <div @click="handleClick">{{msg}}</div>
+        <div :title="'wwt'+title">
+            hello world
+        </div>
+        <input type="text" v-model="content">
+        <div>{{content}}</div>
     </div>
 </body>
 <script>
     new Vue({
         el:"#root",
-      //  template:"<h1>{{number}}</h1>",
         data:{
-            msg:"hello world",
-            number:123,
-            content:"<h1>v-html</h1>"
-        },
-        methods:{
-            handleClick:function(){
-                this.msg = "wwt";
-            }
+            title:"this is hello world",
+            content:"this is content"
         }
     })
 </script>
