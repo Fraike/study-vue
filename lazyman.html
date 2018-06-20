@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    function _LazyMan(name){
+        this.tasks=[];
+        var self = this;
+        var fn = (function(n){
+            var name = n;
+            return function(){
+                console.log("hi! this is "+name+"!");
+                self.next();
+                
+            }
+        })(name);
+        this.tasks.push(fn);
+        setTimeout(function(){
+            self.next();
+        },0);
+    }
+    _LazyMan.prototype.next = function(){
+        var fn = this.tasks.shift();
+        fn && fn();
+    }
+    _LazyMan.prototype.eat = function(name){
+        var self = this;
+        var fn = (function(name){
+            return function(){
+                console.log("Eat" + name + "~");
+                self.next();
+            }
+        })(name);
+        this.tasks.push(fn);
+        return this;
+    }
+    _LazyMan.prototype.sleep = function(){
+        var self = this;
+        var fn = (function(time){
+            return function(){
+                setTimeout(function(){
+                console.log("wake up after" + time + "s!");
+                self.next();
+            },time*1000)
+            }
+        })(time);
+        this.tasks.push(fn);
+        return this;
+    }
+    _LazyMan.prototype.sleepFirst = function(time){
+        var self = this ;
+        var fn = (function(time){
+            return function(){
+                setTimeout(function(){
+                    console.log("wake up after" + time + "s!");
+                    self.next();
+                },time*1000);
+                this.tasks.unshift(fn);
+                return this;
+            }
+
+        })
+
+    }
+    // 封装
+    function lazyMan(name){
+        return new _LazyMan(name);
+    }
+    lazyMan("hank");
+</script>
+</html>
