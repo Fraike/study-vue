@@ -26,7 +26,7 @@
             self.next();
         },0);
     }
-    _LazyMan.prototype.next = function(){
+    _LazyMan.prototype.next = function(time){
         var fn = this.tasks.shift();
         fn && fn();
     }
@@ -39,9 +39,10 @@
             }
         })(name);
         this.tasks.push(fn);
+        console.log(this.tasks)
         return this;
     }
-    _LazyMan.prototype.sleep = function(){
+    _LazyMan.prototype.sleep = function(time){
         var self = this;
         var fn = (function(time){
             return function(){
@@ -74,5 +75,7 @@
         return new _LazyMan(name);
     }
     lazyMan("hank");
+    // lazyMan("Hank").sleep(10).eat("dinner")
+    lazyMan("Hank").eat("dinner").eat("supper")
 </script>
 </html>
